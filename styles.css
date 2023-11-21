@@ -39,3 +39,7 @@ Test je quiz grondig om ervoor te zorgen dat alles soepel werkt.
 12. Deployment:
 Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatform om het met anderen te delen.
 */
+
+#breedSpan {
+    text-decoration: underline;
+}
