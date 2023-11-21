@@ -1,0 +1,41 @@
+/*
+Stappen om een hondenrassenquiz te maken:
+1. Verzamel gegevens:
+Zoek een API die informatie en afbeeldingen van hondenrassen levert. Een populaire keuze is de Dog API.
+2. Stel je projectstructuur in:
+Maak HTML, CSS en JavaScript-bestanden.
+Organiseer je mappenstructuur, bijvoorbeeld:
+Copy code
+project/
+├── index.html
+├── styles.css
+└── script.js
+3. Schrijf HTML:
+Maak de basisstructuur van je HTML-bestand.
+Voeg elementen toe voor de hondenrasnaam, de afbeeldingen en de keuzeknoppen.
+4. Stijl met CSS:
+Style je HTML-elementen om de quiz er aantrekkelijk uit te laten zien.
+Overweeg het gebruik van flexbox of grid voor het ordenen van de afbeeldingen.
+5. Haal gegevens op met JavaScript:
+Gebruik JavaScript om gegevens op te halen van de Dog API.
+Toon de naam van een willekeurig hondenras op de pagina.
+6. Laat afbeeldingen zien:
+Gebruik de Dog API om vier afbeeldingen van het gekozen ras op te halen.
+Toon deze afbeeldingen op de pagina.
+7. Voeg interactie toe:
+Maak de keuzeknoppen interactief.
+Laat de gebruiker raden welke afbeelding overeenkomt met de getoonde hondenrasnaam.
+8. Controleer de antwoorden:
+Voeg logica toe om de antwoorden van de gebruiker te controleren.
+Toon een melding of update de score van de gebruiker.
+9. Wissel naar een nieuw hondenras:
+Zorg ervoor dat de quiz doorgaat naar het volgende hondenras nadat de gebruiker heeft geraden.
+10. Voeg extra functies toe (optioneel):
+Timer voor het beantwoorden van vragen.
+Totaalscore en hoogste score bijhouden.
+Een "Hint" knop voor extra informatie over het ras.
+11. Test je quiz:
+Test je quiz grondig om ervoor te zorgen dat alles soepel werkt.
+12. Deployment:
+Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatform om het met anderen te delen.
+*/
