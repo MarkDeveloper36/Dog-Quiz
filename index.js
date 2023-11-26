@@ -1,6 +1,9 @@
 let breedToGuess;
 let breedToGuessImg;
 
+const breedSpan = document.querySelector('#breedSpan');
+breedSpan.innerText;
+
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfByBreedUrl = 'https://dog.ceo/api/breed/hound/images';
 
@@ -11,8 +14,9 @@ function getRandomDogBreed() {
     .then(response => response.json())
     .then(data => {
       if (data.status === 'success') {
-        showBreedToGuess(data);
+        decideBreedToGuess(data);
         getImgOfBreedToGuess();
+       
       } else {
           console.error('Er is een fout opgetreden bij het ophalen van random dog name.');
         }
@@ -22,13 +26,10 @@ function getRandomDogBreed() {
   });
 }
 
-function showBreedToGuess(apiData) {
+function decideBreedToGuess(apiData) {
   const regexToIsolateBreedName = /breeds\/(.+)\//;
   const breedData = apiData.message.match(regexToIsolateBreedName);
   breedToGuess = breedData[1];
-
-  const breedSpan = document.querySelector('#breedSpan');
-  breedSpan.innerText = breedToGuess;
 }
 
 function getImgOfBreedToGuess() {
@@ -39,6 +40,7 @@ function getImgOfBreedToGuess() {
     .then(data => {
       if (data.status === 'success') {
         showImageOfBreedToGuess(data);
+         breedSpan.innerText = breedToGuess;
       } else {
         console.error('something went wrong with fetching img of dog to guess.');
         location.reload();
