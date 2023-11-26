@@ -41,6 +41,7 @@ function getImgOfBreedToGuess() {
         showImageOfBreedToGuess(data);
       } else {
         console.error('something went wrong with fetching img of dog to guess.');
+        location.reload();
       }
     })
     .catch(error => {
