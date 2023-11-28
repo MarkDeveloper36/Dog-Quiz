@@ -1,13 +1,9 @@
 let breedToGuess;
 let breedToGuessImg;
 
-let wrongAnswerA;
-let wrongAnswerB;
-let wrongAnswerC;
-
-let randomImgAUrl;
-let randomImgBUrl;
-let randomImgCUrl;
+const wrongAnswerA = new Image();
+const wrongAnswerB = new Image();
+const wrongAnswerC = new Image();
 
 const breedSpan = document.querySelector('#breedSpan');
 breedSpan.innerText;
@@ -18,7 +14,9 @@ const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
 getRandomDogBreed();
-getWrongAnswersImgs();
+for (let i = 0; i < 3; i++) {
+  displayWrongAnswersImgs(i);
+}
 
 // functions for right answer
 function getRandomDogBreed() {
@@ -60,63 +58,56 @@ function showImageOfBreedToGuess(apiData) {
   highestIndexImgArrOfBreedToGuess = apiData.message.length;
   randomIndexOfBreedToGuess = getRandomNum(0, (highestIndexImgArrOfBreedToGuess + 1));
   // append img to the document
-  breedToGuessImg = document.createElement('img');
-  breedToGuessImg.src = apiData.message[randomIndexOfBreedToGuess];
-  breedToGuessImg.id = 'topLeft';
-  breedToGuessImg.className = 'imgOption';
-  grid.appendChild(breedToGuessImg);
+  isValidImageUrl(apiData.message[randomIndexOfBreedToGuess], function(isValid) {
+    if(isValid) {
+      breedToGuessImg = document.createElement('img');
+      breedToGuessImg.src = apiData.message[randomIndexOfBreedToGuess];
+      breedToGuessImg.id = 'topLeft';
+      breedToGuessImg.className = 'imgOption';
+      grid.appendChild(breedToGuessImg);
+    } else {
+      getImgOfBreedToGuess();
+    }
+  })
+  
 }
 
 function getRandomNum(min, max) {return Math.floor(Math.random() * (max - min) + min)} // max is de exclusieve bovengrens
 
 // functions for wrong answers
-function getWrongAnswersImgs() {
-  fetch(getImgOfRandomImgUrl)
-  .then(response => response.json())
-  .then(data => {
-    if (data.status === 'success') {
-      randomImgAUrl = data.message[0];
-      randomImgBUrl = data.message[1];
-      randomImgCUrl = data.message[2];
-      appendWongAnswers();
-    }})
-  .catch(error => {
-    console.error('Something went wrong with fetching data from the api:', error);
-  });
+function displayWrongAnswersImgs(count) {
+    fetch(getImgOfRandomImgUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        let url = data.message[0];
+        isValidImageUrl(url, function(isValid) {
+          if(isValid) {
+            let img = document.createElement('img');
+            img.src = url;
+            img.className = 'imgOption';
+            if (count === 0) {img.id = 'topRight'};
+            if (count === 1) {img.id = 'bottomLeft'};
+            if (count === 2) {img.id = 'bottomRight'};
+            grid.appendChild(img);
+          } else {
+            displayWrongAnswersImgs();
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Something went wrong with fetching data from the api:', error);
+    });
 }
 
-function appendWongAnswers() {
-  wrongAnswerA = document.createElement('img');
-  wrongAnswerA.src = randomImgAUrl;
-  wrongAnswerA.id = 'topRight';
-  wrongAnswerA.className = 'imgOption';
-  grid.appendChild(wrongAnswerA);
-
-  wrongAnswerB = document.createElement('img');
-  wrongAnswerB.src = randomImgBUrl;
-  wrongAnswerB.id = 'bottomLeft';
-  wrongAnswerB.className = 'imgOption';
-  grid.appendChild(wrongAnswerB);
-
-  wrongAnswerC = document.createElement('img');
-  wrongAnswerC.src = randomImgCUrl;
-  wrongAnswerC.id = 'bottomRight';
-  wrongAnswerC.className = 'imgOption';
-  grid.appendChild(wrongAnswerC);
-}
-
-function isValidImageUrl(url) {
+function isValidImageUrl(url, callback) {
   let img = new Image();
   img.onload = function() {
-    console.log(true);
+    callback(true);
   };
   img.onerror = function() {
-    console.log(false);
+    callback(false);
   };
   img.src = url;
 }
-
-const timeOut = setTimeout(function() {
-  console.log(randomImgAUrl);
-  isValidImageUrl(randomImgAUrl)
-}, 1000);
