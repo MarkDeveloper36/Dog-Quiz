@@ -62,7 +62,7 @@ function showImageOfBreedToGuess(apiData) {
     if(isValid) {
       breedToGuessImg = document.createElement('img');
       breedToGuessImg.src = apiData.message[randomIndexOfBreedToGuess];
-      breedToGuessImg.id = 'topLeft';
+      breedToGuessImg.id = decidePosition();
       breedToGuessImg.className = 'imgOption';
       grid.appendChild(breedToGuessImg);
     } else {
@@ -86,9 +86,7 @@ function displayWrongAnswersImgs(count) {
             let img = document.createElement('img');
             img.src = url;
             img.className = 'imgOption';
-            if (count === 0) {img.id = 'topRight'};
-            if (count === 1) {img.id = 'bottomLeft'};
-            if (count === 2) {img.id = 'bottomRight'};
+            img.id = decidePosition();
             grid.appendChild(img);
           } else {
             displayWrongAnswersImgs();
@@ -110,4 +108,29 @@ function isValidImageUrl(url, callback) {
     callback(false);
   };
   img.src = url;
+}
+
+const availablePositions = ['position1', 'position2', 'position3', 'position4'];
+
+function decidePosition() {
+  let result;
+  let randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
+  if (randomPosition === 'position1') {
+    let index = availablePositions.indexOf('position1');
+    availablePositions.splice(index, 1);
+    result = 'topLeft';
+  } else if (randomPosition === 'position2') {
+    let index = availablePositions.indexOf('position2');
+    availablePositions.splice(index, 1);
+    result = 'topRight';
+  } else if (randomPosition === 'position3') {
+    let index = availablePositions.indexOf('position3');
+    availablePositions.splice(index, 1);
+    result = 'bottomLeft';
+  } else {
+    let index = availablePositions.indexOf('position4');
+    availablePositions.splice(index, 1);
+    result = 'bottomRight';
+  }
+  return result;
 }
