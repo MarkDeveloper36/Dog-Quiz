@@ -134,3 +134,16 @@ function decidePosition() {
   }
   return result;
 }
+
+const clickedSpan = document.querySelector('#clickedSpan');
+setTimeout(function() {
+  const imgElements = document.querySelectorAll('img');
+  imgElements.forEach(element => {
+  element.addEventListener('click', () => {
+    let regexToIsolateBreedName = /breeds\/(.+)\//;
+    let regexMatch = element.src.match(regexToIsolateBreedName);
+    let breedName = regexMatch[1];
+    clickedSpan.textContent = breedName;
+  })
+});
+}, 1000)
