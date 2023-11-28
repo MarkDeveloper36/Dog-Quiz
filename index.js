@@ -5,9 +5,9 @@ let wrongAnswerA;
 let wrongAnswerB;
 let wrongAnswerC;
 
-let randomImgA;
-let randomImgB;
-let randomImgC;
+let randomImgAUrl;
+let randomImgBUrl;
+let randomImgCUrl;
 
 const breedSpan = document.querySelector('#breedSpan');
 breedSpan.innerText;
@@ -75,14 +75,11 @@ function getWrongAnswersImgs() {
   .then(response => response.json())
   .then(data => {
     if (data.status === 'success') {
-      randomImgA = data.message[0];
-      randomImgB = data.message[1];
-      randomImgC = data.message[2];
+      randomImgAUrl = data.message[0];
+      randomImgBUrl = data.message[1];
+      randomImgCUrl = data.message[2];
       appendWongAnswers();
-    } else {
-      console.error('Something went wrong with feting randome images.');
-    }
-  })
+    }})
   .catch(error => {
     console.error('Something went wrong with fetching data from the api:', error);
   });
@@ -90,20 +87,36 @@ function getWrongAnswersImgs() {
 
 function appendWongAnswers() {
   wrongAnswerA = document.createElement('img');
-  wrongAnswerA.src = randomImgA;
+  wrongAnswerA.src = randomImgAUrl;
   wrongAnswerA.id = 'topRight';
   wrongAnswerA.className = 'imgOption';
   grid.appendChild(wrongAnswerA);
 
   wrongAnswerB = document.createElement('img');
-  wrongAnswerB.src = randomImgB;
+  wrongAnswerB.src = randomImgBUrl;
   wrongAnswerB.id = 'bottomLeft';
   wrongAnswerB.className = 'imgOption';
   grid.appendChild(wrongAnswerB);
 
   wrongAnswerC = document.createElement('img');
-  wrongAnswerC.src = randomImgC;
+  wrongAnswerC.src = randomImgCUrl;
   wrongAnswerC.id = 'bottomRight';
   wrongAnswerC.className = 'imgOption';
   grid.appendChild(wrongAnswerC);
 }
+
+function isValidImageUrl(url) {
+  let img = new Image();
+  img.onload = function() {
+    console.log(true);
+  };
+  img.onerror = function() {
+    console.log(false);
+  };
+  img.src = url;
+}
+
+const timeOut = setTimeout(function() {
+  console.log(randomImgAUrl);
+  isValidImageUrl(randomImgAUrl)
+}, 1000);
