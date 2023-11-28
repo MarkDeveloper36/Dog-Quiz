@@ -1,14 +1,24 @@
 let breedToGuess;
 let breedToGuessImg;
 
+let wrongAnswerA;
+let wrongAnswerB;
+let wrongAnswerC;
+
+let randomImgA;
+let randomImgB;
+let randomImgC;
+
 const breedSpan = document.querySelector('#breedSpan');
 breedSpan.innerText;
 
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
-const getImgOfByBreedUrl = 'https://dog.ceo/api/breed/hound/images';
+const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
 getRandomDogBreed();
+getWrongAnswersImgs();
 
+// functions for right answer
 function getRandomDogBreed() {
   fetch(getBreedToGuessUrl)
     .then(response => response.json())
@@ -16,14 +26,10 @@ function getRandomDogBreed() {
       if (data.status === 'success') {
         decideBreedToGuess(data);
         getImgOfBreedToGuess();
-       
       } else {
           console.error('Er is een fout opgetreden bij het ophalen van random dog name.');
         }
-      })
-    .catch(error => {
-      console.error('Er is een fout opgetreden bij het ophalen van de gegevens:', error);
-  });
+      });
 }
 
 function decideBreedToGuess(apiData) {
@@ -40,15 +46,11 @@ function getImgOfBreedToGuess() {
     .then(data => {
       if (data.status === 'success') {
         showImageOfBreedToGuess(data);
-         breedSpan.innerText = breedToGuess;
+        breedSpan.innerText = breedToGuess;
       } else {
-        console.error('something went wrong with fetching img of dog to guess.');
-        location.reload();
+        getRandomDogBreed();
       }
-    })
-    .catch(error => {
-      console.error('Somthing went wrong witch fetching data of getImgOfBreedToGuessUrl', error);
-    })
+    });
 }
 
 function showImageOfBreedToGuess(apiData) {
@@ -62,3 +64,36 @@ function showImageOfBreedToGuess(apiData) {
 }
 
 function getRandomNum(min, max) {return Math.floor(Math.random() * (max - min) + min)} // max is de exclusieve bovengrens
+
+// functions for wrong answers
+function getWrongAnswersImgs() {
+  fetch(getImgOfRandomImgUrl)
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      randomImgA = data.message[0];
+      randomImgB = data.message[1];
+      randomImgC = data.message[2];
+      appendWongAnswers();
+    } else {
+      console.error('Something went wrong with feting randome images.');
+    }
+  })
+  .catch(error => {
+    console.error('Something went wrong with fetching data from the api:', error);
+  });
+}
+
+function appendWongAnswers() {
+  wrongAnswerA = document.createElement('img');
+  wrongAnswerA.src = randomImgA;
+  document.body.appendChild(wrongAnswerA);
+
+  wrongAnswerB = document.createElement('img');
+  wrongAnswerB.src = randomImgB;
+  document.body.appendChild(wrongAnswerB);
+
+  wrongAnswerC = document.createElement('img');
+  wrongAnswerC.src = randomImgC;
+  document.body.appendChild(wrongAnswerC);
+}
