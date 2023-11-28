@@ -40,6 +40,69 @@ Test je quiz grondig om ervoor te zorgen dat alles soepel werkt.
 Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatform om het met anderen te delen.
 */
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    --grid-height: 85vh;
+    --grid-width: 90vw;
+    --answer-height: calc(var(--grid-height) * 0.4);
+}
+
 #breedSpan {
     text-decoration: underline;
+}
+
+#grid {
+    display: grid;
+    justify-content: space-evenly;
+    align-items:center;
+    width: var(--grid-width);
+    height: var(--grid-height);
+    background-color: #343434;
+    border-radius: 2rem;
+}
+
+#topLeft {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+#topRight {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+#bottomLeft {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#bottomRight {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.imgOption {
+    border-radius: 0.5rem;
+    display: inline-block;
+    max-width: 100%;
+    height: var(--answer-height);
+    padding: .25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    transition: all .2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+}
+
+.imgOption:focus,
+.imgOption:hover {
+    transition: all .2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.075);
+}
+.imgOption.align-self-start {
+    margin-top: 0;
+}
+.imgOption.align-self-end {
+    margin-bottom: 0;
 }

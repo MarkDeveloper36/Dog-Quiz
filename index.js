@@ -12,6 +12,8 @@ let randomImgC;
 const breedSpan = document.querySelector('#breedSpan');
 breedSpan.innerText;
 
+const grid = document.querySelector('#grid');
+
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
@@ -60,7 +62,9 @@ function showImageOfBreedToGuess(apiData) {
   // append img to the document
   breedToGuessImg = document.createElement('img');
   breedToGuessImg.src = apiData.message[randomIndexOfBreedToGuess];
-  document.body.appendChild(breedToGuessImg);
+  breedToGuessImg.id = 'topLeft';
+  breedToGuessImg.className = 'imgOption';
+  grid.appendChild(breedToGuessImg);
 }
 
 function getRandomNum(min, max) {return Math.floor(Math.random() * (max - min) + min)} // max is de exclusieve bovengrens
@@ -87,13 +91,19 @@ function getWrongAnswersImgs() {
 function appendWongAnswers() {
   wrongAnswerA = document.createElement('img');
   wrongAnswerA.src = randomImgA;
-  document.body.appendChild(wrongAnswerA);
+  wrongAnswerA.id = 'topRight';
+  wrongAnswerA.className = 'imgOption';
+  grid.appendChild(wrongAnswerA);
 
   wrongAnswerB = document.createElement('img');
   wrongAnswerB.src = randomImgB;
-  document.body.appendChild(wrongAnswerB);
+  wrongAnswerB.id = 'bottomLeft';
+  wrongAnswerB.className = 'imgOption';
+  grid.appendChild(wrongAnswerB);
 
   wrongAnswerC = document.createElement('img');
   wrongAnswerC.src = randomImgC;
-  document.body.appendChild(wrongAnswerC);
+  wrongAnswerC.id = 'bottomRight';
+  wrongAnswerC.className = 'imgOption';
+  grid.appendChild(wrongAnswerC);
 }
