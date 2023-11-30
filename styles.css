@@ -41,6 +41,7 @@ Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatfo
 */
 
 body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -1,6 +1,7 @@
 let breedToGuess;
 let breedToGuessImg;
 let clickedBreed;
+let points = 0;
 
 let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
@@ -17,12 +18,16 @@ const blockDiv = document.querySelector('#blockdiv');
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
-getRandomDogBreed()
-.then(() => {
-  displayWrongAnswerImg();
-  displayWrongAnswerImg();
-  displayWrongAnswerImg();
+gameLoop();
+function gameLoop(){
+  blockDiv.style.zIndex = '1';
+  getRandomDogBreed()
+  .then(() => {
+    displayWrongAnswerImg();
+    displayWrongAnswerImg();
+    displayWrongAnswerImg();
 });
+}
 
 // functions for right answer
 function getRandomDogBreed() {
@@ -78,7 +83,7 @@ function showImageOfBreedToGuess(apiData) {
       breedToGuessImg.className = 'imgOption';
       breedToGuessImg.addEventListener('click', selectAnswerListener);
       grid.appendChild(breedToGuessImg);
-      unblockAnswers();
+      blockDiv.style.zIndex = '-1';
     } else {
       getImgOfBreedToGuess();
     }
@@ -131,7 +136,7 @@ function isValidImageUrl(url, callback) {
   img.src = url;
 }
 
-const availablePositions = ['position1', 'position2', 'position3', 'position4'];
+let availablePositions = ['position1', 'position2', 'position3', 'position4'];
 
 function decidePosition() {
   let result;
@@ -169,11 +174,23 @@ function isNotDubbleImage(url, callback) {
   callback(true);
 }
 
+// give feedback
 function selectAnswerListener(event) {
   clickedBreed = event.target.src.match(regexToIsolateBreedNameOutUrl)[1];
-  console.log(clickedBreed);
+  if (breedToGuess === clickedBreed) {
+    points++;
+    restGame();
+    gameLoop();
+  } else {
+    console.log('try again');
+  }
 }
 
-function unblockAnswers() {
-  blockDiv.style.zIndex = '-1';
+function restGame() {
+  blockDiv.style.zIndex = '1';
+  const numOfChildEl = grid.children.length;
+  for (let i = 0; i < numOfChildEl - 1; i++) {
+    grid.removeChild(grid.lastChild);
+  }
+  availablePositions = ['position1', 'position2', 'position3', 'position4'];
 }
