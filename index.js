@@ -2,6 +2,7 @@ let breedToGuess;
 let breedToGuessImg;
 let clickedBreed;
 let points = 0;
+let lives = 3;
 
 let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
@@ -9,11 +10,13 @@ const wrongAnswerA = new Image();
 const wrongAnswerB = new Image();
 const wrongAnswerC = new Image();
 
+const pointsSpan = document.querySelector('#points');
+const livesSpan = document.querySelector('#lives');
 const breedSpan = document.querySelector('#breedSpan');
-breedSpan.innerText;
-
 const grid = document.querySelector('#grid');
 const blockDiv = document.querySelector('#blockdiv');
+
+breedSpan.innerText;
 
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
@@ -179,10 +182,12 @@ function selectAnswerListener(event) {
   clickedBreed = event.target.src.match(regexToIsolateBreedNameOutUrl)[1];
   if (breedToGuess === clickedBreed) {
     points++;
+    pointsSpan.innerText = points;
     restGame();
     gameLoop();
   } else {
-    console.log('try again');
+    lives--;
+    livesSpan.innerText = lives;
   }
 }
 

@@ -41,15 +41,35 @@ Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatfo
 */
 
 body {
+    --grid-height: 82vh;
+    --grid-width: 90vw;
+    --answer-height: calc(var(--grid-height) * 0.4);
+    --grid-margin: calc(0.5rem + 1vh) 0;
+
+    overflow: hidden;
+}
+
+main {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
 
-    --grid-height: 85vh;
-    --grid-width: 90vw;
-    --answer-height: calc(var(--grid-height) * 0.4);
+.header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    height: calc(50px + 0.5vh);
+    width: 99vw;
+    padding: 0.5rem 1rem;
+    background-color: #e9e9e9;
+}
+
+header > p {
+    font-size: 1.5rem;
 }
 
 #breedSpan {
@@ -64,6 +84,7 @@ body {
     height: var(--grid-height);
     background-color: #e9e9e9;
     border-radius: 2rem;
+    margin: var(--grid-margin);
 }
 
 #blockdiv {
@@ -72,6 +93,7 @@ body {
     width: var(--grid-width);
     height: var(--grid-height);
     border-radius: 2rem;
+    margin: var(--grid-margin);
 }
 
 #topLeft {
@@ -108,7 +130,7 @@ body {
 .imgOption:focus,
 .imgOption:hover {
     transition: all .2s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.075);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .imgOption.align-self-start {
     margin-top: 0;
