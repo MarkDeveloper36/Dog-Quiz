@@ -15,6 +15,8 @@ const livesSpan = document.querySelector('#lives');
 const breedSpan = document.querySelector('#breedSpan');
 const grid = document.querySelector('#grid');
 const blockDiv = document.querySelector('#blockdiv');
+const wrongSound = document.querySelector('#wrongSound');
+const rightSound = document.querySelector('#rightSound');
 
 breedSpan.innerText;
 
@@ -184,6 +186,7 @@ function selectAnswerListener(event) {
     event.target.classList.add('right');
     points++;
     pointsSpan.innerText = points;
+    rightSound.play();
     setTimeout(() => {
       restGame();
       gameLoop();
@@ -192,6 +195,7 @@ function selectAnswerListener(event) {
     lives--;
     livesSpan.innerText = lives;
     event.target.classList.add('wrong');
+    wrongSound.play();
   }
 }
 
@@ -203,3 +207,4 @@ function restGame() {
   }
   availablePositions = ['position1', 'position2', 'position3', 'position4'];
 }
+
