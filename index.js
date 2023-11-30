@@ -27,7 +27,7 @@ function getRandomDogBreed() {
     .then(response => response.json())
     .then(data => {
       if (data.status === 'success') {
-        decideBreedToGuess(data);
+        breedToGuess = decideBreedToGuess(data);
         getImgOfBreedToGuess();
       } else {
           console.error('Er is een fout opgetreden bij het ophalen van random dog name.');
@@ -36,8 +36,12 @@ function getRandomDogBreed() {
 }
 
 function decideBreedToGuess(apiData) {
-  const breedData = apiData.message.match(regexToIsolateBreedNameOutUrl);
-  breedToGuess = breedData[1];
+  const decidedBreed = apiData.message.match(regexToIsolateBreedNameOutUrl)[1];
+  if (decidedBreed === 'kombai' || decidedBreed === 'cavapoo') {
+    getRandomDogBreed();
+  } else {
+    return decidedBreed;
+  }
 }
 
 function getImgOfBreedToGuess() {
