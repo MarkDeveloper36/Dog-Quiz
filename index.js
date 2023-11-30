@@ -181,13 +181,17 @@ function isNotDubbleImage(url, callback) {
 function selectAnswerListener(event) {
   clickedBreed = event.target.src.match(regexToIsolateBreedNameOutUrl)[1];
   if (breedToGuess === clickedBreed) {
+    event.target.classList.add('right');
     points++;
     pointsSpan.innerText = points;
-    restGame();
-    gameLoop();
+    setTimeout(() => {
+      restGame();
+      gameLoop();
+    }, 1000)
   } else {
     lives--;
     livesSpan.innerText = lives;
+    event.target.classList.add('wrong');
   }
 }
 

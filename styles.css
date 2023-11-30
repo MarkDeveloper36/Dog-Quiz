@@ -130,11 +130,44 @@ header > p {
 .imgOption:focus,
 .imgOption:hover {
     transition: all .2s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.075);
+    transform: scale(1.005);
+    transform: translateY(-1px);
 }
 .imgOption.align-self-start {
     margin-top: 0;
 }
 .imgOption.align-self-end {
     margin-bottom: 0;
+}
+
+.wrong {
+    border: 2px solid #cf1616;
+    background-color: #cf1616;
+    animation: wrong 200ms ease-out;
+    background-color: red;
+    opacity: 0.7;
+}
+
+@keyframes wrong {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(1deg);
+    }
+    50% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(3deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.right {
+    border: 2px solid #28cf16;
+    background-color: #28cf16;
 }
