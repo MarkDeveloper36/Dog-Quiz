@@ -17,6 +17,7 @@ const grid = document.querySelector('#grid');
 const blockDiv = document.querySelector('#blockdiv');
 const wrongSound = document.querySelector('#wrongSound');
 const rightSound = document.querySelector('#rightSound');
+const gameOverSound = document.querySelector('#gameOverSound');
 
 breedSpan.innerText;
 
@@ -192,10 +193,15 @@ function selectAnswerListener(event) {
       gameLoop();
     }, 1000)
   } else {
-    lives--;
-    livesSpan.innerText = lives;
-    event.target.classList.add('wrong');
-    wrongSound.play();
+    if (lives > 0) {
+      lives--;
+      livesSpan.innerText = lives;
+      event.target.classList.add('wrong');
+      wrongSound.play();
+    } else {
+      gameOverSound.play();
+    }
+    
   }
 }
 
