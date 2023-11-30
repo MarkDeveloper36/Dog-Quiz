@@ -66,6 +66,7 @@ function showImageOfBreedToGuess(apiData) {
       breedToGuessImg.src = apiData.message[randomIndexOfBreedToGuess];
       breedToGuessImg.id = decidePosition();
       breedToGuessImg.className = 'imgOption';
+      breedToGuessImg.addEventListener('click', selectAnswerListener);
       grid.appendChild(breedToGuessImg);
     } else {
       getImgOfBreedToGuess();
@@ -91,6 +92,7 @@ function displayWrongAnswerImg() {
                 img.src = url;
                 img.className = 'imgOption';
                 img.id = decidePosition();
+                img.addEventListener('click', selectAnswerListener);
                 grid.appendChild(img);
               } else {
                 displayWrongAnswerImg();
@@ -156,13 +158,7 @@ function isNotDubbleImage(url, callback) {
   callback(true);
 }
 
-setTimeout(function() {
-  const imgElements = document.querySelectorAll('img');
-  imgElements.forEach(element => {
-  element.addEventListener('click', () => {
-    let regexMatch = element.src.match(regexToIsolateBreedNameOutUrl);
-    clickedBreed = regexMatch[1];
-    console.log(clickedBreed);
-  })
-});
-}, 1400) // sometimes  this function is called before the last image is loaded from the api. this can cause the img to be not clickable
+function selectAnswerListener(event) {
+  clickedBreed = event.target.src.match(regexToIsolateBreedNameOutUrl)[1];
+  console.log(clickedBreed);
+}
