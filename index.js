@@ -12,18 +12,22 @@ const breedSpan = document.querySelector('#breedSpan');
 breedSpan.innerText;
 
 const grid = document.querySelector('#grid');
+const blockDiv = document.querySelector('#blockdiv');
 
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
-getRandomDogBreed();
-for (let i = 0; i < 3; i++) {
+getRandomDogBreed()
+.then(() => {
   displayWrongAnswerImg();
-}
+  displayWrongAnswerImg();
+  displayWrongAnswerImg();
+});
 
 // functions for right answer
 function getRandomDogBreed() {
-  fetch(getBreedToGuessUrl)
+  return new Promise(resolve => {
+    fetch(getBreedToGuessUrl)
     .then(response => response.json())
     .then(data => {
       if (data.status === 'success') {
@@ -33,6 +37,8 @@ function getRandomDogBreed() {
           console.error('Er is een fout opgetreden bij het ophalen van random dog name.');
         }
       });
+    resolve();
+  });
 }
 
 function decideBreedToGuess(apiData) {
@@ -72,6 +78,7 @@ function showImageOfBreedToGuess(apiData) {
       breedToGuessImg.className = 'imgOption';
       breedToGuessImg.addEventListener('click', selectAnswerListener);
       grid.appendChild(breedToGuessImg);
+      unblockAnswers();
     } else {
       getImgOfBreedToGuess();
     }
@@ -165,4 +172,8 @@ function isNotDubbleImage(url, callback) {
 function selectAnswerListener(event) {
   clickedBreed = event.target.src.match(regexToIsolateBreedNameOutUrl)[1];
   console.log(clickedBreed);
+}
+
+function unblockAnswers() {
+  blockDiv.style.zIndex = '-1';
 }
