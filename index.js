@@ -1,5 +1,8 @@
 let breedToGuess;
 let breedToGuessImg;
+let clickedBreed;
+
+let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
 const wrongAnswerA = new Image();
 const wrongAnswerB = new Image();
@@ -15,7 +18,7 @@ const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
 getRandomDogBreed();
 for (let i = 0; i < 3; i++) {
-  displayWrongAnswersImgs(i);
+  displayWrongAnswerImg();
 }
 
 // functions for right answer
@@ -33,8 +36,7 @@ function getRandomDogBreed() {
 }
 
 function decideBreedToGuess(apiData) {
-  const regexToIsolateBreedName = /breeds\/(.+)\//;
-  const breedData = apiData.message.match(regexToIsolateBreedName);
+  const breedData = apiData.message.match(regexToIsolateBreedNameOutUrl);
   breedToGuess = breedData[1];
 }
 
@@ -75,7 +77,7 @@ function showImageOfBreedToGuess(apiData) {
 function getRandomNum(min, max) {return Math.floor(Math.random() * (max - min) + min)} // max is de exclusieve bovengrens
 
 // functions for wrong answers
-function displayWrongAnswersImgs(count) {
+function displayWrongAnswerImg() {
     fetch(getImgOfRandomImgUrl)
     .then(response => response.json())
     .then(data => {
@@ -83,13 +85,19 @@ function displayWrongAnswersImgs(count) {
         let url = data.message[0];
         isValidImageUrl(url, function(isValid) {
           if(isValid) {
-            let img = document.createElement('img');
-            img.src = url;
-            img.className = 'imgOption';
-            img.id = decidePosition();
-            grid.appendChild(img);
+            isNotDubbleImage(url, function(isNotDubble) {
+              if (isNotDubble) {
+                let img = document.createElement('img');
+                img.src = url;
+                img.className = 'imgOption';
+                img.id = decidePosition();
+                grid.appendChild(img);
+              } else {
+                displayWrongAnswerImg();
+              } 
+            });
           } else {
-            displayWrongAnswersImgs();
+            displayWrongAnswerImg();
           }
         });
       }
@@ -135,15 +143,26 @@ function decidePosition() {
   return result;
 }
 
-const clickedSpan = document.querySelector('#clickedSpan');
+function isNotDubbleImage(url, callback) {
+  const currentImg = document.querySelectorAll('img');
+  const imgToCheck = url.match(regexToIsolateBreedNameOutUrl)[1];
+  for (let i = 0; i < currentImg.length; i++) {
+    let currentBreedToCompair = currentImg[i].src.match(regexToIsolateBreedNameOutUrl)[1];
+    if(imgToCheck === currentBreedToCompair) {
+      console.log('Prevented double!!!!');
+      callback(false);
+    }
+  }
+  callback(true);
+}
+
 setTimeout(function() {
   const imgElements = document.querySelectorAll('img');
   imgElements.forEach(element => {
   element.addEventListener('click', () => {
-    let regexToIsolateBreedName = /breeds\/(.+)\//;
-    let regexMatch = element.src.match(regexToIsolateBreedName);
-    let breedName = regexMatch[1];
-    clickedSpan.textContent = breedName;
+    let regexMatch = element.src.match(regexToIsolateBreedNameOutUrl);
+    clickedBreed = regexMatch[1];
+    console.log(clickedBreed);
   })
 });
-}, 1000)
+}, 1400) // sometimes  this function is called before the last image is loaded from the api. this can cause the img to be not clickable
