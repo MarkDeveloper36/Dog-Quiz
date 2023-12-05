@@ -146,6 +146,14 @@ div > button {
     opacity: 0.7;
 }
 
+.OutOfTime {
+    border: 2px solid #cf7316;
+    background-color: #cf7316;
+    animation: wrong 200ms ease-out;
+    background-color: #cf7316;
+    opacity: 0.7;
+}
+
 @keyframes wrong {
     0% {
         transform: rotate(0deg);
@@ -222,17 +230,17 @@ div > button {
     z-index: 4;
 }
 
-#body:hover #semiCircle1{
+.circle1Trasition {
     transform: rotate(-180deg);
-    transition: transform 2.5s linear;
+    transition: transform 4s linear;
 }
 
-#body:hover #semiCircle2{
+.circle2Trasition {
     transform: rotate(-360deg);
-    transition: transform 5s linear;
+    transition: transform 8s linear;
 }
 
-#body:hover #semiCircle3{
+.circle3Trasition {
     opacity: 0;;
-    transition: opacity 0s 2.5s;
+    transition: opacity 0s 4s;
 }

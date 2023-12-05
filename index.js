@@ -4,7 +4,7 @@ let clickedBreed;
 let points = 0;
 let highscore = 0;
 let lives = 3;
-
+let timer;
 
 let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
@@ -26,6 +26,7 @@ const gameOverSound = document.querySelector('#gameOverSound');
 gameOverSound.volume = 0.25;
 const highscoreMsg = document.querySelector('#highscoreMsg');
 const pointsMsg = document.querySelector('#pointsMsg');
+const clock = document.querySelector('#clock');
 
 const newGameBtn = document.querySelector('#newGameBtn');
 newGameBtn.addEventListener('click', () => {
@@ -109,6 +110,7 @@ function showImageOfBreedToGuess(apiData) {
       breedToGuessImg.addEventListener('click', selectAnswerListener);
       grid.appendChild(breedToGuessImg);
       blockDiv.style.zIndex = '-1';
+      startTimer();
     } else {
       getImgOfBreedToGuess();
     }
@@ -208,6 +210,7 @@ function selectAnswerListener(event) {
     pointsSpan.innerText = points;
     rightSound.currentTime = 0.35;
     rightSound.play();
+    clearTimeout(timer);
     setTimeout(() => {
       resetRound();
       roundLoop();
@@ -227,6 +230,7 @@ function selectAnswerListener(event) {
       endGameDiv.style.zIndex = '2';
       gameOverSound.currentTime = 0.5;
       gameOverSound.play();
+      stopTimer();
     }
     
   }
@@ -239,7 +243,33 @@ function resetRound() {
     grid.removeChild(grid.lastChild);
   }
   availablePositions = ['position1', 'position2', 'position3', 'position4'];
+  stopTimer();
+  clearTimeout(outOfTime);
+}
+
+function startTimer() {
+  clock.children[0].classList.add('circle1Trasition');
+  clock.children[1].classList.add('circle2Trasition');
+  clock.children[2].classList.add('circle3Trasition');
+  timer = setTimeout(function() {
+    outOfTime();
+}, 8000);
+}
+
+function stopTimer() {
+  clock.children[0].classList.remove('circle1Trasition');
+  clock.children[1].classList.remove('circle2Trasition');
+  clock.children[2].classList.remove('circle3Trasition');
 }
 
 
 
+function outOfTime() {
+  lives--;
+  livesSpan.innerText = lives;
+  breedToGuessImg.classList.add('OutOfTime');
+  setTimeout(() => {
+    resetRound();
+    roundLoop();
+  }, 2000)
+}
