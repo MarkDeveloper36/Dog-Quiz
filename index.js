@@ -2,7 +2,9 @@ let breedToGuess;
 let breedToGuessImg;
 let clickedBreed;
 let points = 0;
+let highscore = 0;
 let lives = 3;
+
 
 let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
@@ -12,6 +14,7 @@ const wrongAnswerC = new Image();
 
 const pointsSpan = document.querySelector('#points');
 const livesSpan = document.querySelector('#lives');
+const highscoreSpan = document.querySelector('#highscore');
 const breedSpan = document.querySelector('#breedSpan');
 const grid = document.querySelector('#grid');
 const blockDiv = document.querySelector('#blockdiv');
@@ -19,6 +22,8 @@ const endGameDiv = document.querySelector('#endGameDiv');
 const wrongSound = document.querySelector('#wrongSound');
 const rightSound = document.querySelector('#rightSound');
 const gameOverSound = document.querySelector('#gameOverSound');
+const highscoreMsg = document.querySelector('#highscoreMsg');
+const pointsMsg = document.querySelector('#pointsMsg');
 
 const newGameBtn = document.querySelector('#newGameBtn');
 newGameBtn.addEventListener('click', () => {
@@ -213,6 +218,10 @@ function selectAnswerListener(event) {
       wrongSound.currentTime = 1;
       wrongSound.play();
     } else if (lives <= 0) {
+      if (points > highscore){highscore = points};
+      highscoreMsg.innerText = highscore;
+      highscoreSpan.innerText = highscore;
+      pointsMsg.innerText = points;
       endGameDiv.style.zIndex = '2';
       gameOverSound.currentTime = 0.5;
       gameOverSound.play();

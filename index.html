@@ -10,8 +10,11 @@
 </head>
 <body id="body">
     <header class="header">
-        <p>Points: <span id="points">0</span></p>
-        <h1>Which one is the <pan id="breedSpan">.....</pan>?</h1>
+        <div id="scoreDiv">
+            <p>Points: <span id="points">0</span></p>
+            <p>Highscore: <span id="highscore">0</span></p>
+        </div>
+        <h1>Which one is the <span id="breedSpan">.....</span>?</h1>
         <p>Lives: <span id="lives">3</span></p>
     </header>
     <main>
@@ -19,6 +22,8 @@
             <div id="blockdiv"></div>
             <div id="endGameDiv">
                 <h1 id="gameOverMsg">Game Over!</h1>
+                <p>Points = <span id="pointsMsg">0</span></p>
+                <p>Highscore = <span id="highscoreMsg">0</span></p>
                 <button id="newGameBtn">New Game</button>
             </div>
         </div>

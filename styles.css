@@ -76,6 +76,17 @@ header > p {
     text-decoration: underline;
 }
 
+#scoreDiv {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#scoreDiv > p {
+    margin: 0;
+    text-align: right;
+}
+
 #grid {
     display: grid;
     justify-content: space-evenly;
@@ -89,7 +100,7 @@ header > p {
 
 #blockdiv,
 #endGameDiv {
-    font-size: 4rem;
+    font-size: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,9 +113,17 @@ header > p {
     margin: var(--grid-margin);
 }
 
+div > h1 {
+    margin: 20px;
+}
+
+div > p {
+    margin: 10px;
+}
+
 div > button {
-    font-size: 3rem;
-    margin-bottom: 7.5rem;
+    font-size: 2rem;
+    margin-top: 4rem;
 }
 
 #topLeft {
