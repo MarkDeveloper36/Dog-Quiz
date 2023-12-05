@@ -15,18 +15,30 @@ const livesSpan = document.querySelector('#lives');
 const breedSpan = document.querySelector('#breedSpan');
 const grid = document.querySelector('#grid');
 const blockDiv = document.querySelector('#blockdiv');
+const endGameDiv = document.querySelector('#endGameDiv');
 const wrongSound = document.querySelector('#wrongSound');
 const rightSound = document.querySelector('#rightSound');
 const gameOverSound = document.querySelector('#gameOverSound');
+
+const newGameBtn = document.querySelector('#newGameBtn');
+newGameBtn.addEventListener('click', () => {
+  points = 0;
+  pointsSpan.innerText = points;
+  lives = 3;
+  livesSpan.innerText = lives;
+  resetRound();
+  roundLoop();
+});
 
 breedSpan.innerText;
 
 const getBreedToGuessUrl = 'https://dog.ceo/api/breeds/image/random';
 const getImgOfRandomImgUrl = 'https://dog.ceo/api/breeds/image/random/3';
 
-gameLoop();
-function gameLoop(){
+roundLoop();
+function roundLoop(){
   blockDiv.style.zIndex = '1';
+  endGameDiv.style.zIndex = '-1';
   getRandomDogBreed()
   .then(() => {
     displayWrongAnswerImg();
@@ -187,30 +199,36 @@ function selectAnswerListener(event) {
     event.target.classList.add('right');
     points++;
     pointsSpan.innerText = points;
+    rightSound.currentTime = 0.35;
     rightSound.play();
     setTimeout(() => {
-      restGame();
-      gameLoop();
+      resetRound();
+      roundLoop();
     }, 1000)
   } else {
+    lives--;
+    livesSpan.innerText = lives;
+    event.target.classList.add('wrong');
     if (lives > 0) {
-      lives--;
-      livesSpan.innerText = lives;
-      event.target.classList.add('wrong');
+      wrongSound.currentTime = 1;
       wrongSound.play();
-    } else {
+    } else if (lives <= 0) {
+      endGameDiv.style.zIndex = '2';
+      gameOverSound.currentTime = 0.5;
       gameOverSound.play();
     }
     
   }
 }
 
-function restGame() {
+function resetRound() {
   blockDiv.style.zIndex = '1';
   const numOfChildEl = grid.children.length;
-  for (let i = 0; i < numOfChildEl - 1; i++) {
+  for (let i = 0; i < numOfChildEl - 2; i++) {
     grid.removeChild(grid.lastChild);
   }
   availablePositions = ['position1', 'position2', 'position3', 'position4'];
 }
+
+
 
