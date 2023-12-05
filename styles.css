@@ -1,46 +1,12 @@
 /*
-Stappen om een hondenrassenquiz te maken:
-1. Verzamel gegevens:
-Zoek een API die informatie en afbeeldingen van hondenrassen levert. Een populaire keuze is de Dog API.
-2. Stel je projectstructuur in:
-Maak HTML, CSS en JavaScript-bestanden.
-Organiseer je mappenstructuur, bijvoorbeeld:
-Copy code
-project/
-├── index.html
-├── styles.css
-└── script.js
-3. Schrijf HTML:
-Maak de basisstructuur van je HTML-bestand.
-Voeg elementen toe voor de hondenrasnaam, de afbeeldingen en de keuzeknoppen.
-4. Stijl met CSS:
-Style je HTML-elementen om de quiz er aantrekkelijk uit te laten zien.
-Overweeg het gebruik van flexbox of grid voor het ordenen van de afbeeldingen.
-5. Haal gegevens op met JavaScript:
-Gebruik JavaScript om gegevens op te halen van de Dog API.
-Toon de naam van een willekeurig hondenras op de pagina.
-6. Laat afbeeldingen zien:
-Gebruik de Dog API om vier afbeeldingen van het gekozen ras op te halen.
-Toon deze afbeeldingen op de pagina.
-7. Voeg interactie toe:
-Maak de keuzeknoppen interactief.
-Laat de gebruiker raden welke afbeelding overeenkomt met de getoonde hondenrasnaam.
-8. Controleer de antwoorden:
-Voeg logica toe om de antwoorden van de gebruiker te controleren.
-Toon een melding of update de score van de gebruiker.
-9. Wissel naar een nieuw hondenras:
-Zorg ervoor dat de quiz doorgaat naar het volgende hondenras nadat de gebruiker heeft geraden.
 10. Voeg extra functies toe (optioneel):
 Timer voor het beantwoorden van vragen.
-Totaalscore en hoogste score bijhouden.
 Een "Hint" knop voor extra informatie over het ras.
-11. Test je quiz:
-Test je quiz grondig om ervoor te zorgen dat alles soepel werkt.
-12. Deployment:
-Als je tevreden bent met je quiz, kun je deze deployen naar een webhostingplatform om het met anderen te delen.
 */
 
 body {
+    --primary-color: #eaeff6;
+
     --grid-height: 82vh;
     --grid-width: 90vw;
     --answer-height: calc(var(--grid-height) * 0.4);
@@ -49,12 +15,15 @@ body {
     overflow: hidden;
 }
 
-main {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+.center {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+main {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    flex-direction: column;
 }
 
 .header {
@@ -65,7 +34,7 @@ main {
     height: calc(50px + 0.5vh);
     width: 99vw;
     padding: 0.5rem 1rem;
-    background-color: #e9e9e9;
+    background-color: var(--primary-color);
 }
 
 header > p {
@@ -83,6 +52,7 @@ header > p {
 }
 
 #scoreDiv > p {
+    width: 200px;
     margin: 0;
     text-align: right;
 }
@@ -93,7 +63,7 @@ header > p {
     align-items:center;
     width: var(--grid-width);
     height: var(--grid-height);
-    background-color: #e9e9e9;
+    background-color: var(--primary-color);
     border-radius: 2rem;
     margin: var(--grid-margin);
 }
@@ -101,12 +71,9 @@ header > p {
 #blockdiv,
 #endGameDiv {
     font-size: 3rem;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    background-color: #e9e9e9;
+    background-color: var(--primary-color);
     width: var(--grid-width);
     height: var(--grid-height);
     border-radius: 2rem;
@@ -200,4 +167,72 @@ div > button {
 .right {
     border: 2px solid #28cf16;
     background-color: #28cf16;
+}
+
+/* timer #ff8c00*/
+#timerAndLivesDiv {
+    width: 200px;
+    justify-content: space-between;
+}
+
+#timerAndLivesDiv > p {
+    font-size: 1.3rem;
+}
+
+#clock {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    left: 75vw;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#semiCircle1 {
+    width: 25px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #ff8c00;
+    z-index: 2;
+    transform-origin: right center;
+}
+
+#semiCircle2 {
+    width: 25px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    background-color: white;
+    z-index: 3;
+    transform-origin: left center;
+}
+
+#semiCircle3 {
+    width: 25px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    background-color: #ff8c00;
+    z-index: 4;
+}
+
+#body:hover #semiCircle1{
+    transform: rotate(-180deg);
+    transition: transform 2.5s linear;
+}
+
+#body:hover #semiCircle2{
+    transform: rotate(-360deg);
+    transition: transform 5s linear;
+}
+
+#body:hover #semiCircle3{
+    opacity: 0;;
+    transition: opacity 0s 2.5s;
 }

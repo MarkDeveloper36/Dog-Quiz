@@ -8,9 +8,9 @@ let lives = 3;
 
 let regexToIsolateBreedNameOutUrl = /breeds\/(.+)\//;
 
-const wrongAnswerA = new Image();
-const wrongAnswerB = new Image();
-const wrongAnswerC = new Image();
+// const wrongAnswerA = new Image();
+// const wrongAnswerB = new Image();
+// const wrongAnswerC = new Image();
 
 const pointsSpan = document.querySelector('#points');
 const livesSpan = document.querySelector('#lives');
@@ -21,7 +21,9 @@ const blockDiv = document.querySelector('#blockdiv');
 const endGameDiv = document.querySelector('#endGameDiv');
 const wrongSound = document.querySelector('#wrongSound');
 const rightSound = document.querySelector('#rightSound');
+rightSound.volume = 0.15;
 const gameOverSound = document.querySelector('#gameOverSound');
+gameOverSound.volume = 0.25;
 const highscoreMsg = document.querySelector('#highscoreMsg');
 const pointsMsg = document.querySelector('#pointsMsg');
 
