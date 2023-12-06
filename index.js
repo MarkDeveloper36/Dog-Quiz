@@ -222,29 +222,23 @@ function selectAnswerListener(event) {
     if (lives > 0) {
       wrongSound.currentTime = 1;
       wrongSound.play();
-    } else if (lives <= 0) {
-      if (points > highscore){highscore = points};
-      highscoreMsg.innerText = highscore;
-      highscoreSpan.innerText = highscore;
-      pointsMsg.innerText = points;
-      endGameDiv.style.zIndex = '2';
-      gameOverSound.currentTime = 0.5;
-      gameOverSound.play();
-      stopTimer();
+    } else if (lives === 0) {
+      gameOver();
     }
-    
   }
 }
 
 function resetRound() {
   blockDiv.style.zIndex = '1';
   const numOfChildEl = grid.children.length;
+  console.log(grid.children);
   for (let i = 0; i < numOfChildEl - 2; i++) {
     grid.removeChild(grid.lastChild);
+    console.log('child removed');
   }
   availablePositions = ['position1', 'position2', 'position3', 'position4'];
   stopTimer();
-  clearTimeout(outOfTime);
+  clearTimeout(timer);
 }
 
 function startTimer() {
@@ -262,14 +256,28 @@ function stopTimer() {
   clock.children[2].classList.remove('circle3Trasition');
 }
 
-
-
 function outOfTime() {
   lives--;
   livesSpan.innerText = lives;
   breedToGuessImg.classList.add('OutOfTime');
-  setTimeout(() => {
-    resetRound();
-    roundLoop();
-  }, 2000)
+  if (lives === 0) {
+    gameOver();
+  } else {
+    setTimeout(() => {
+      resetRound();
+      roundLoop();
+    }, 2000)
+  }
+}
+
+function gameOver() {
+  if (points > highscore){highscore = points};
+  highscoreMsg.innerText = highscore;
+  highscoreSpan.innerText = highscore;
+  pointsMsg.innerText = points;
+  endGameDiv.style.zIndex = '2';
+  gameOverSound.currentTime = 0.5;
+  gameOverSound.play();
+  stopTimer();
+  clearTimeout(timer);
 }
